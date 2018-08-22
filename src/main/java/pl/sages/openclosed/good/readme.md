@@ -1,0 +1,1 @@
+1. Wprowadź wspólny interfejs

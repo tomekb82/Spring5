@@ -1,0 +1,3 @@
+1. Wprowadź wspólny interfejs
+2. Przekaż EventTracker konkretną/ne implementacje
+3. Użyj...

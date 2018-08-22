@@ -1,0 +1,2 @@
+- Co jeśli chciałbyś użyć `checkAccess` gdzieś indziej w kodzie?
+- Co jeśli zmieni globalnie sposób sprawdzania dostępu?
