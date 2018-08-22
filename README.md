@@ -12,4 +12,9 @@ KIBANA - GUI do Elasticksearch
 Logstash - logika w ruby do mergowania/agregowania danych przesylanych do Elasticksearch
 Apache Kafka - rozproszona kolejka podobna do RabbitMQ, wiele punkt√w skad przesylamy dane, szybka
 
+### Docker
+
+#### elasticksearch
+
+https://github.com/cackoarek/docker-big-data
 
