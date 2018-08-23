@@ -15,6 +15,9 @@ public class App {
 
     try(AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(App.class)) {
       logger.info(Arrays.asList(ctx.getBeanDefinitionNames()));
+
+      Album album = ctx.getBean("album", Album.class);
+      System.out.println(album);
     }
   }
 }
