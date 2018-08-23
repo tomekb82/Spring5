@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="person" class="pl.sages.Person" init-method="init" destroy-method="init"/>
+
+  <bean id="person2" class="pl.sages.Person">
+    <constructor-arg value="AREK"/>
+    <constructor-arg ref="leg"/>
+  </bean>
+
+  <bean id="personC" class="pl.sages.Person" c:leg-ref="leg" c:name="AREL"/>
+
+  <bean id="leg" class="pl.sages.Leg" primary="true"/>
+  <bean id="leg2" class="pl.sages.Leg"/>
+
+  <bean id="person3" class="pl.sages.Person" >
+    <property name="leg" ref="leg"/>
+    <property name="name" value="eeee"/>
+  </bean>
+
+  <bean id="person4" class="pl.sages.PersonFactory" factory-method="buildPerson"/>
+
+  <bean id="factory" class="pl.sages.PersonFactory"/>
+
+
+  <bean id="person5" factory-bean="factory" factory-method="getPeople"/>
+
+  <bean id="building" class="pl.sages.Building" autowire="byName" />
+
+  <bean id="building2" class="pl.sages.Building" autowire="byType" >
+    <property name="leg" ref="leg"/>
+  </bean>
+
+  <bean id="building3" class="pl.sages.Building" autowire="byType" >
+  </bean>
+
+  <bean id="personP" class="pl.sages.Person"
+  p:leg-ref="leg"
+  p:name="eeee"/>
+
+
+</beans>
