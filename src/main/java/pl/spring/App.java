@@ -1,10 +1,10 @@
 package pl.spring;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.util.Arrays;
-import org.apache.log4j.Logger;
 
 @ComponentScan(basePackages = {"pl.spring"})
 public class App {
@@ -17,6 +17,7 @@ public class App {
       logger.info(Arrays.asList(ctx.getBeanDefinitionNames()));
 
       Album album = ctx.getBean("album", Album.class);
+      album.setName("test");
       System.out.println(album);
     }
   }
