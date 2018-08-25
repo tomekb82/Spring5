@@ -1,16 +1,14 @@
 package pl.spring;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 
 import java.util.Arrays;
 
 @ImportResource("classpath:context.xml")
 @ComponentScan(basePackages = {"pl.spring"})
 @PropertySource("classpath:config.properties")
+@Import(JpaConfiguration.class)
 public class App {
 
   static final  Logger logger = Logger.getLogger(App.class);
@@ -18,7 +16,7 @@ public class App {
   public static void main(String[] args) {
 
     // ustawienie aktywnego profilu
-    System.setProperty("spring.profiles.active", "test");
+    System.setProperty("spring.profiles.active", "jpa");
 
     try(AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(App.class)) {
       logger.info(Arrays.asList(ctx.getBeanDefinitionNames()));

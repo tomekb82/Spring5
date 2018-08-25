@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.spring.dao.AlbumDao;
 import pl.spring.model.Album;
 
+import static pl.spring.model.QAlbum.album;
+
 @Repository
 @Transactional
 public class AlbumDaoImpl extends AbstractJpaDaoImpl<Album> implements AlbumDao {
@@ -25,7 +27,7 @@ public class AlbumDaoImpl extends AbstractJpaDaoImpl<Album> implements AlbumDao 
   public Album findByName(String name) {
     return new JPAQueryFactory(entityManager)
             .selectFrom(album)
-            .where(album.name.eq(title))
+            .where(album.name.eq(name))
             .fetchOne();
   }
 
