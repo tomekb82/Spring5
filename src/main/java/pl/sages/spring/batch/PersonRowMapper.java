@@ -1,0 +1,19 @@
+package pl.sages.spring.batch;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.springframework.jdbc.core.RowMapper;
+
+public class PersonRowMapper implements RowMapper<Person> {
+
+  @Override
+  public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
+    Person person = new Person();
+    person.setId(rs.getInt("id"));
+    person.setName(rs.getString("name"));
+    person.setSurname(rs.getString("surname"));
+    person.setPesel(rs.getString("pesel"));
+    person.setOccupation(rs.getString("occupation"));
+    return person;
+  }
+}
