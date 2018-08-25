@@ -2,15 +2,13 @@ package pl.spring.dao.impl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-import pl.spring.dao.AlbumDao;
+import pl.spring.dao.springdata.CustomAlbumDao;
 import pl.spring.model.Album;
 
 import static pl.spring.model.QAlbum.album;
 
 @Repository
-@Transactional
-public class AlbumDaoImpl extends AbstractJpaDaoImpl<Album> implements AlbumDao {
+public class AlbumDaoImpl extends AbstractJpaDaoImpl<Album> implements CustomAlbumDao/*AlbumDao*/ {
 
   public AlbumDaoImpl() {
     super(Album.class);

@@ -9,11 +9,26 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ALBUM")
-@NoArgsConstructor
-@Getter
-@Setter
+//@NoArgsConstructor
+//@Getter
+//@Setter
 public class Album extends AbstractEntity {
 
   private String name;
 
+  public Album() {
+
+  }
+
+  public Album(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 }
