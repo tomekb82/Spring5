@@ -1,0 +1,116 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/batch
+      http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+      http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+  <batch:job id="reportJob">
+    <batch:step id="step1">
+      <batch:tasklet>
+        <batch:chunk reader="xmlItemReader"
+                     writer="cvsFileItemWriter" processor="filterReportProcessor"
+                     commit-interval="1">
+        </batch:chunk>
+      </batch:tasklet>
+    </batch:step>
+  </batch:job>
+
+  <!-- Filtering process -->
+  <bean id="filterReportProcessor" class="pl.sages.spring.batch.FilterReportProcessor" />
+
+  <bean id="xmlItemReader"
+        class="org.springframework.batch.item.xml.StaxEventItemReader">
+    <property name="fragmentRootElementName" value="weather" />
+    <property name="resource" value="classpath:data.xml" />
+    <property name="unmarshaller" ref="reportUnmarshaller" />
+  </bean>
+
+  <!-- Read and map values to object, via jaxb2 -->
+  <bean id="reportUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+    <property name="classesToBeBound">
+      <list>
+        <value>pl.sages.spring.batch.Weather</value>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="cvsFileItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter">
+    <!-- write to this csv file -->
+    <property name="resource" value="file:output.xml" />
+    <property name="shouldDeleteIfExists" value="true" />
+
+    <property name="lineAggregator">
+      <bean
+          class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+        <property name="delimiter" value="," />
+        <property name="fieldExtractor">
+          <bean
+              class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+            <property name="names" value="sensorId, city, quantity, csvDate, value" />
+          </bean>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id = "jobLauncher"
+        class = "org.springframework.batch.core.launch.support.SimpleJobLauncher">
+    <property name = "jobRepository" ref = "jobRepository" />
+  </bean>
+
+
+
+  <bean id = "transactionManager" class = "org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+
+  <!-- =============  START: CONFIG FOR REAL MYSQL DATABASE =============  -->
+  <!--<bean id = "dataSource"-->
+        <!--class = "org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <!--<property name = "driverClassName" value = "com.mysql.cj.jdbc.Driver" />-->
+    <!--<property name = "url" value = "jdbc:mysql://localhost:3306/springbatch?verifyServerCertificate=false&amp;useSSL=true" />-->
+    <!--<property name = "username" value = "root" />-->
+    <!--<property name = "password" value = "root" />-->
+  <!--</bean>-->
+  <!---->
+  <!--&lt;!&ndash; create job-meta tables automatically &ndash;&gt;-->
+  <!--<jdbc:initialize-database data-source = "dataSource">-->
+    <!--<jdbc:script location = "org/springframework/batch/core/schema-drop-mysql.sql" />-->
+    <!--<jdbc:script location = "org/springframework/batch/core/schema-mysql.sql" />-->
+  <!--</jdbc:initialize-database>-->
+
+  <!--<bean id = "jobRepository"-->
+        <!--class = "org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">-->
+    <!--<property name = "dataSource" ref = "dataSource" />-->
+    <!--<property name = "transactionManager" ref="transactionManager" />-->
+    <!--<property name = "databaseType" value = "mysql" />-->
+  <!--</bean>-->
+
+  <!-- =============  END: CONFIG FOR REAL MYSQL DATABASE =============  -->
+
+
+  <!-- =============  START: CONFIG FOR IN-MEMORY HSQL DATABASE =============  -->
+
+  <jdbc:embedded-database id="dataSource" type="HSQL">
+  </jdbc:embedded-database>
+
+
+  <bean id = "jobRepository"
+        class = "org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
+    <property name = "dataSource" ref = "dataSource" />
+    <property name = "transactionManager" ref="transactionManager" />
+    <property name = "databaseType" value = "hsql" />
+  </bean>
+
+  <!-- create job-meta tables automatically -->
+  <jdbc:initialize-database data-source = "dataSource">
+    <!--<jdbc:script location = "org/springframework/batch/core/schema-drop-mysql.sql" />-->
+    <jdbc:script location = "org/springframework/batch/core/schema-drop-hsqldb.sql" />
+    <!--<jdbc:script location = "org/springframework/batch/core/schema-mysql.sql" />-->
+    <jdbc:script location = "org/springframework/batch/core/schema-hsqldb.sql" />
+  </jdbc:initialize-database>
+
+  <!-- ============= STOP: CONFIG FOR IN-MEMORY HSQL DATABASE =============  -->
+
+</beans>
