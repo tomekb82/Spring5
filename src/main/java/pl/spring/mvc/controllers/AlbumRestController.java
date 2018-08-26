@@ -42,5 +42,10 @@ public class AlbumRestController {
   public void deleteById(@PathVariable("id") Long id) {
       albumService.deleteById(id);
   }
-  
+
+  // run Spring Batch Job
+  @GetMapping(value = "/album-job")
+  public void runJob() throws Exception {
+    albumService.runJob();
+  }
 }

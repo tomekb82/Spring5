@@ -13,6 +13,7 @@
 
   <!--gdy mamy inny context z innego modułu-->
   <!--<import resource="classpath:XXXX" />   -->
+  <import resource="classpath:jobConfig.xml"/>
 
   <!--wrzucanie zmiennych z propertisów poprzez ${}-->
   <bean id="albumXml" class="pl.spring.Album" p:name="${user}"/>

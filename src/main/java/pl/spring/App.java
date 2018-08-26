@@ -27,6 +27,9 @@ public class App {
 
       Album albumXml = ctx.getBean("albumXml", Album.class);
       System.out.println(albumXml);
+
+
+
     }
   }
 }

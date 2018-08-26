@@ -46,10 +46,10 @@ public class JpaConfiguration {
 
   @Bean
   @Autowired
-  public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, Properties jpaProperties) {
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource hsqlDataSource, Properties jpaProperties) {
     LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
     entityManagerFactoryBean.setPackagesToScan("pl.spring");
-    entityManagerFactoryBean.setDataSource(dataSource);
+    entityManagerFactoryBean.setDataSource(hsqlDataSource);
     entityManagerFactoryBean.setJpaProperties(jpaProperties);
     entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
     return entityManagerFactoryBean;
