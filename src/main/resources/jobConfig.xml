@@ -8,7 +8,7 @@
       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
   <batch:job id = "readAlbumsJob">
-    <batch:step id = "step1">
+    <batch:step id = "step1" allow-start-if-complete="true">
       <batch:tasklet>
         <batch:chunk reader = "dbItemReader" writer = "xmlFileItemWriter"
                      processor = "itemProcessor" commit-interval = "10">
