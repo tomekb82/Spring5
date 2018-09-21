@@ -10,10 +10,6 @@ import static pl.spring.model.QAlbum.album;
 @Repository
 public class AlbumDaoImpl extends AbstractJpaDaoImpl<Album> implements CustomAlbumDao/*AlbumDao*/ {
 
-  public AlbumDaoImpl() {
-    super(Album.class);
-  }
-
   /*@Override
   public Album findByName(String name) {
     return entityManager.createQuery("from " + Album.class.getSimpleName() + " where name = :name", Album.class)

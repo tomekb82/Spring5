@@ -6,7 +6,7 @@ import org.springframework.context.annotation.*;
 import java.util.Arrays;
 
 @ImportResource("classpath:context.xml")
-@ComponentScan(basePackages = {"pl.spring"})
+@ComponentScan(basePackages = {"pl.spring"}, excludeFilters = @ComponentScan.Filter(type=FilterType.REGEX,pattern="pl\\.spring\\.mvc\\..*"))
 @PropertySource("classpath:config.properties")
 @Import(JpaConfiguration.class)
 public class App {

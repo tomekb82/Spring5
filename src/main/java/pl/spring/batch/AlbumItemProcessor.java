@@ -13,7 +13,7 @@ public class AlbumItemProcessor implements ItemProcessor<Album, AlbumDTO> {
     albumDTO.setId(album.getId());
     albumDTO.setName(album.getName().toUpperCase());
     albumDTO.setCreated(Calendar.getInstance().getTime());
-    System.out.println("Processing..." + albumDTO);
+    System.out.println("Processing AlbumItemProcessor..." + albumDTO);
     return albumDTO;
   }
 }

@@ -4,11 +4,14 @@ import lombok.ToString;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @XmlRootElement(name = "Album")
 @ToString
 public class AlbumDTO {
+
+  private static final SimpleDateFormat OUTPUT_DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
   private long id;
   private String name;
@@ -39,5 +42,9 @@ public class AlbumDTO {
 
   public void setCreated(Date created) {
     this.created = created;
+  }
+
+  public String getCsvDate()  {
+    return OUTPUT_DATE_FORMAT.format(getCreated());
   }
 }
